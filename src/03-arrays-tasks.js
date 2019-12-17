@@ -345,7 +345,6 @@ function sortDigitNamesByNumericOrder(arr) {
     ['nine', 9],
   ]);
   return arr.sort((a, b) => nums.get(a) - nums.get(b));
-  // throw new Error('Not implemented');
 }
 
 /**
@@ -506,8 +505,8 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  return [...new Set(arr)];
 }
 
 /**
@@ -540,8 +539,19 @@ function distinct(/* arr */) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const map = new Map();
+  array.map((el) => {
+    const key = keySelector(el);
+    const val = valueSelector(el);
+    if (map.has(key)) {
+      map.get(key).push(val);
+    } else {
+      map.set(key, [val]);
+    }
+    return el;
+  });
+  return map;
 }
 
 
@@ -558,8 +568,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map((el) => childrenSelector(el)).flat(1);
 }
 
 
