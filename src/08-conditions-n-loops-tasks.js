@@ -385,13 +385,24 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  let number = num;
+  const buff = [];
+  let can = true;
+  while (can) {
+    buff.push(number % n);
+    number = parseInt(number / n, 10);
+    if (number < n) {
+      can = false;
+      buff.push(number);
+    }
+  }
+  return buff.reverse().join('');
 }
 
 
 /**
- * Returns the commom directory path for specified array of full filenames.
+ * Returns the common directory path for specified array of full filenames.
  *
  * @param {array} pathes
  * @return {string}
