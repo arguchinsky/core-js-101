@@ -185,8 +185,12 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  for (let i = 0; i < str.length; i += 1) {
+    const symbol = str.charAt(i);
+    if (str.indexOf(symbol) === i && str.indexOf(symbol, i + 1) === -1) return symbol;
+  }
+  return null;
 }
 
 
@@ -212,8 +216,11 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const openBracket = isStartIncluded ? '[' : '(';
+  const closeBracket = isEndIncluded ? ']' : ')';
+  const numbersStr = a < b ? `${a}, ${b}` : `${b}, ${a}`;
+  return `${openBracket}${numbersStr}${closeBracket}`;
 }
 
 
@@ -229,8 +236,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -246,8 +253,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return parseInt(num.toString().split('').reverse().join(''), 10);
 }
 
 
@@ -271,8 +278,23 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const cnnBuff = ccn.toString().split('').map((el) => parseInt(el, 10));
+  let sum = 0;
+  for (let i = 0; i < cnnBuff.length; i += 1) {
+    let cardNum = cnnBuff[i];
+
+    if ((cnnBuff.length - i) % 2 === 0) {
+      cardNum *= 2;
+      if (cardNum > 9) {
+        cardNum -= 9;
+      }
+    }
+
+    sum += cardNum;
+  }
+
+  return sum % 10 === 0;
 }
 
 /**
@@ -289,8 +311,12 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const sum = num.toString().split('').map((el) => parseInt(el, 10)).reduce((acc, curr) => acc + curr);
+  if (sum > 9) {
+    return getDigitalRoot(sum);
+  }
+  return sum;
 }
 
 
@@ -315,8 +341,27 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const closeBrackets = [']', '}', ')', '>'];
+  const openBrackets = ['[', '{', '(', '<'];
+  const buffer = [];
+
+  if (str.length === 0) return true;
+
+  for (let i = 0; i < str.length; i += 1) {
+    const bracket = str.charAt(i);
+    if (i === 0 && closeBrackets.includes(bracket)) return false;
+    if (openBrackets.includes(bracket)) buffer.push(bracket);
+    if (closeBrackets.includes(bracket)) {
+      if (openBrackets.indexOf(buffer[buffer.length - 1]) === closeBrackets.indexOf(bracket)) {
+        buffer.pop();
+      } else {
+        return false;
+      }
+    }
+  }
+
+  return buffer.length === 0;
 }
 
 
