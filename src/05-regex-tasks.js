@@ -32,7 +32,7 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-  throw new Error('Not implemented');
+  return /\{[\d+a-f]{8}.[\d+a-f]{4}.[\d+a-f]{4}.[\d+a-f]{4}.[\d+a-f]{12}\}/i;
 }
 
 
@@ -80,6 +80,7 @@ function getRegexForPitSpot() {
  */
 function getPasswordValidator(/* minLength */) {
   throw new Error('Not implemented');
+  // return new RegExp(`\b(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9]{${minLength},}\b`, 'g');
 }
 
 

@@ -202,8 +202,28 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let str = '';
+  let buff = '';
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      if (i === 0) {
+        if (j === 0) buff += '\u250C';
+        else if (j === width - 1) buff += '\u2510\n';
+        else buff += '\u2500';
+      } else if (i === height - 1) {
+        if (j === 0) buff += '\u2514';
+        else if (j === width - 1) buff += '\u2518\n';
+        else buff += '\u2500';
+      } else if (j === 0) buff += '\u2502';
+      else if (j === width - 1) buff += '\u2502\n';
+      else buff += ' ';
+    }
+    str += buff;
+    buff = '';
+  }
+  return str;
+  // throw new Error('Not implemented');
 }
 
 
@@ -223,8 +243,15 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const normal = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const rot = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  const applyRot = (char) => {
+    const index = normal.indexOf(char);
+    return index > -1 ? rot[index] : char;
+  };
+  return str.split('').map((el) => applyRot(el)).join('');
+  // throw new Error('Not implemented');
 }
 
 /**

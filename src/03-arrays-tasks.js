@@ -490,8 +490,15 @@ function getIdentityMatrix(n) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const len = (start > 0 ? (end - start) : end + (-start)) + 1;
+  let count = start;
+  return new Array(len).fill(0).map(() => {
+    const val = count;
+    count += 1;
+    return val;
+  });
+  // throw new Error('Not implemented');
 }
 
 /**
@@ -581,12 +588,17 @@ function selectMany(arr, childrenSelector) {
  * @return {any} element from array
  *
  * @example
- *   [[1, 2], [3, 4], [5, 6]], [0,0]  => 1        (arr[0][0])
+ *   [[1, 2], [3, 4], [5, 6]],    => 1        (arr[0][0])
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  let temp = Array.from(arr);
+  return indexes.map((el) => {
+    temp = temp[el];
+    return temp;
+  }).slice(-1)[0];
+  // throw new Error('Not implemented');
 }
 
 
@@ -608,8 +620,14 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length % 2) {
+    const half = Math.floor(arr.length / 2);
+    return [...arr.slice(half + 1), ...arr.slice(half, half + 1), ...arr.slice(0, half)];
+  }
+  const half = Math.floor(arr.length / 2);
+  return [...arr.slice(half), ...arr.slice(0, half)];
+  // throw new Error('Not implemented');
 }
 
 
